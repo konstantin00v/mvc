@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
 @ComponentScan("com.konstantin.mvc.repository")
-@EntityScan("com.konstantin.mvc.entity")
+//@EntityScan("com.konstantin.mvc.entity")
 public class MvcApplication {
 
 	public static void main(String[] args) {

@@ -1,6 +1,6 @@
 package com.konstantin.mvc.repository;
 
-import com.konstantin.mvc.entity.Client;
+import com.konstantin.mvc.entity.*;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

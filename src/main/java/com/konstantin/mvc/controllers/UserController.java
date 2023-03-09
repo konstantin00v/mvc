@@ -7,6 +7,7 @@ import com.konstantin.mvc.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Flux;
 
 import java.util.List;
 
@@ -43,12 +44,18 @@ public class UserController {
         return w;
     }
 
-
     @GetMapping({"/books"})
-    public List<Book> showAllBooks() {
+    public Flux<Book> showAllBooks() {
         List<Book> allBooks = this.bookService.getAllBooks();
-        return allBooks;
+        Flux<Book> fluxFromList = Flux.fromIterable(allBooks);
+        return fluxFromList;
     }
+
+//    @GetMapping({"/books"})
+//    public List<Book> showAllBooks() {
+//        List<Book> allBooks = this.bookService.getAllBooks();
+//        return allBooks;
+//    }
 
     @GetMapping({"/books/{id}"})
     public Book getBook(@PathVariable int id) {
