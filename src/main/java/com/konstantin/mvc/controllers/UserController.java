@@ -5,14 +5,20 @@ package com.konstantin.mvc.controllers;
 import com.konstantin.mvc.Service.*;
 import com.konstantin.mvc.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import lombok.extern.slf4j.Slf4j;
+
+import org.springframework.jms.annotation.JmsListener;
+import org.springframework.jms.core.JmsTemplate;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.util.List;
 
 @RestController
-
+@Slf4j
 @RequestMapping("/api")
 public class UserController {
 
@@ -63,6 +69,7 @@ public class UserController {
         return book;
     }
 
+
     @DeleteMapping({"/books/{id}"})
     @Secured("ROLE_ADMIN")
     public void deleteBook(@PathVariable int id) {
@@ -97,6 +104,21 @@ public class UserController {
     public List<User> showAllClients() {
         List<User> allClients = userService.getAllUsers();
         return allClients;
+
+
+    }
+    @Autowired
+    private JmsTemplate jmsTemplate;
+
+    @GetMapping(value = "/send/{message}", produces = "text/html")
+    public String sendMessage(@PathVariable String message) {
+        jmsTemplate.convertAndSend("bookstoreorder", message);
+        return "done";
+    }
+
+    @JmsListener(destination="bookstoreorder")
+    public  void processMessage(String message) {
+        log.info("Order:  " + message);
     }
 
     @PutMapping({"/user"})

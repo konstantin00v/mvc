@@ -6,9 +6,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.jms.annotation.EnableJms;
 
 @SpringBootApplication
 @ComponentScan("com.konstantin.mvc.repository")
+@EnableJms
 //@EntityScan("com.konstantin.mvc.entity")
 public class MvcApplication {
 
